@@ -3,5 +3,51 @@
 <section>
   <h2>Bienvenido a la tienda</h2>
   <p>Comienza a construir tu e‑commerce.</p>
+  {% if request.user.is_authenticated %}
+    <p>Sesión iniciada como {{ request.user.username }}.</p>
+    <a href="{% url 'logout' %}" class="btn">Cerrar sesión</a>
+  {% else %}
+    <button class="btn" data-open="login-modal">Iniciar sesión</button>
+    <button class="btn" data-open="register-modal">Crear cuenta</button>
+  {% endif %}
 </section>
+<div class="modal" id="login-modal" hidden>
+  <div class="modal__dialog">
+    <h3>Iniciar sesión</h3>
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <label>Usuario</label>
+      <input type="text" name="username" required>
+      <label>Contraseña</label>
+      <input type="password" name="password" required>
+      <div class="modal__actions">
+        <button type="submit" class="btn">Entrar</button>
+        <button type="button" class="btn btn--secondary" data-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal__backdrop" data-close></div>
+  </div>
+
+<div class="modal" id="register-modal" hidden>
+  <div class="modal__dialog">
+    <h3>Crear cuenta</h3>
+    <form action="{% url 'register' %}" method="post">
+      {% csrf_token %}
+      <label>Usuario</label>
+      <input type="text" name="username" required>
+      <label>Email (opcional)</label>
+      <input type="email" name="email">
+      <label>Contraseña</label>
+      <input type="password" name="password" required>
+      <label>Confirmar contraseña</label>
+      <input type="password" name="password2" required>
+      <div class="modal__actions">
+        <button type="submit" class="btn">Registrarse</button>
+        <button type="button" class="btn btn--secondary" data-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal__backdrop" data-close></div>
+  </div>
 {% endblock %}

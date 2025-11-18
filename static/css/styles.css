@@ -6,3 +6,17 @@ main { padding: 24px }
 section { max-width: 960px; margin: 0 auto }
 h1, h2 { margin: 0 0 12px }
 p { margin: 0 0 16px }
+ul.messages { list-style: none; padding: 0; margin: 0 0 16px }
+.message { padding: 12px 16px; border-radius: 6px; margin-bottom: 8px; background: #f3f4f6 }
+.message.success { background: #dcfce7 }
+.message.error { background: #fee2e2 }
+.message.info { background: #e0f2fe }
+.btn { display: inline-block; padding: 8px 12px; border: 0; border-radius: 6px; background: #111; color: #fff; cursor: pointer }
+.btn.btn--secondary { background: #6b7280 }
+.modal[hidden] { display: none }
+.modal { position: fixed; inset: 0; }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5) }
+.modal__dialog { position: relative; z-index: 1; width: 100%; max-width: 420px; margin: 10vh auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.2) }
+.modal__actions { display: flex; gap: 8px; margin-top: 12px }
+label { display: block; font-weight: 600; margin: 10px 0 4px }
+input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px }
