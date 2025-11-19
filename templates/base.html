@@ -66,27 +66,20 @@
           <a href="{% url 'product_list' %}" class="sidebar__item" title="Explorar">
             <span class="sidebar__text">Productos</span>
           </a>
-          <a href="{% url 'my_products' %}" class="sidebar__item" title="Mis productos">
-            <span class="sidebar__text">Mis productos</span>
-          </a>
           <a href="{% url 'profile' %}" class="sidebar__item" title="Mi perfil">
             <span class="sidebar__text">Mi perfil</span>
           </a>
           {% if request.user.profile.role == 'buyer' %}
-          <a href="{% url 'purchases_list' %}" class="sidebar__item" title="Mis compras">
-            <span class="sidebar__text">Mis compras</span>
-          </a>
-          {% endif %}
-          {% if request.user.profile.role == 'admin' %}
-          <a href="{% url 'sales_list' %}" class="sidebar__item" title="Mis ventas">
-            <span class="sidebar__text">Mis ventas</span>
-          </a>
-          {% endif %}
-          
-          <a href="{% url 'users_list' %}" class="sidebar__item" title="Usuarios">
-            <span class="sidebar__text">Usuarios</span>
-          </a>
-          {% if request.user.profile.role == 'admin' %}
+            <a href="{% url 'purchases_list' %}" class="sidebar__item" title="Mis compras">
+              <span class="sidebar__text">Mis compras</span>
+            </a>
+          {% elif request.user.profile.role == 'admin' %}
+            <a href="{% url 'sales_list' %}" class="sidebar__item" title="Mis ventas">
+              <span class="sidebar__text">Mis ventas</span>
+            </a>
+            <a href="{% url 'users_list' %}" class="sidebar__item" title="Usuarios">
+              <span class="sidebar__text">Usuarios</span>
+            </a>
           {% endif %}
         </div>
       </aside>
