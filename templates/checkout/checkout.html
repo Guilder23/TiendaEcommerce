@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/productos/listar_productos.css' %}">
+{% endblock %}
+{% block content %}
+<section>
+  <h2>Checkout</h2>
+  <div>
+    <h3>Productos</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for it in items %}
+        <tr>
+          <td>{{ it.product.name }}</td>
+          <td>{{ it.quantity }}</td>
+          <td>${{ it.product.price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div><strong>Total:</strong> ${{ total }}</div>
+  </div>
+  <div>
+    <h3>Vendedor</h3>
+    <div><strong>Usuario:</strong> {{ seller.username }}</div>
+    <div><strong>QR de pago:</strong></div>
+    <div>
+      <img src="{{ seller_profile.qr.url }}" alt="QR de pago" style="width:200px;height:200px;object-fit:contain;border:1px solid #e5e7eb;border-radius:10px">
+    </div>
+  </div>
+  <div>
+    <h3>Comprobante</h3>
+    <form action="{% url 'checkout_submit' %}" method="post" enctype="multipart/form-data" class="form">
+      {% csrf_token %}
+      <label>Subir comprobante</label>
+      <input type="file" name="receipt" accept="image/*" required>
+      <div class="modal__actions" style="margin-top:10px">
+        <button type="submit" class="btn">Finalizar compra</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

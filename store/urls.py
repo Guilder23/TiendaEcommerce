@@ -24,4 +24,21 @@ urlpatterns = [
     path('usuarios/nuevo/', views.user_create, name='user_create'),
     path('usuarios/<int:pk>/editar/', views.user_edit, name='user_edit'),
     path('usuarios/<int:pk>/eliminar/', views.user_delete, name='user_delete'),
+    # CARRITO
+    path('cart/add/<int:pk>/', views.cart_add, name='cart_add'),
+    path('cart/list.json', views.cart_list_json, name='cart_list_json'),
+    path('cart/count.json', views.cart_count_json, name='cart_count_json'),
+    path('cart/remove/<int:item_id>/', views.cart_remove, name='cart_remove'),
+    # CHECKOUT
+    path('checkout/', views.checkout, name='checkout'),
+    path('checkout/submit/', views.checkout_submit, name='checkout_submit'),
+    # VENTAS ADMIN
+    path('ventas/', views.sales_list, name='sales_list'),
+    path('ventas/<int:pk>/confirmar/', views.sales_confirm, name='sales_confirm'),
+    path('ventas/<int:pk>/rechazar/', views.sales_reject, name='sales_reject'),
+    # COMPRAS BUYER
+    path('compras/', views.purchases_list, name='purchases_list'),
+    # NOTIFICACIONES
+    path('notifications/count.json', views.notifications_count_json, name='notifications_count_json'),
+    path('notifications/list.json', views.notifications_list_json, name='notifications_list_json'),
 ]

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/productos/listar_productos.css' %}">
+{% endblock %}
+{% block content %}
+<section>
+  <h2>Mis ventas</h2>
+  {% if orders %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Comprador</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Comprobante</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for o in orders %}
+      <tr>
+        <td>{{ o.buyer.username }}</td>
+        <td>${{ o.total }}</td>
+        <td>{{ o.get_status_display }}</td>
+        <td>{% if o.receipt %}<a href="{{ o.receipt.url }}" target="_blank">Ver</a>{% else %}N/A{% endif %}</td>
+        <td class="actions">
+          {% if o.status == 'pending' %}
+          <form action="{% url 'sales_confirm' o.id %}" method="post" style="display:inline-block">
+            {% csrf_token %}
+            <button class="btn">Confirmar</button>
+          </form>
+          <form action="{% url 'sales_reject' o.id %}" method="post" style="display:inline-block">
+            {% csrf_token %}
+            <input type="text" name="reason" placeholder="Motivo" style="width:180px">
+            <button class="btn btn--secondary">Rechazar</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No hay ventas.</p>
+  {% endif %}
+</section>
+{% endblock %}

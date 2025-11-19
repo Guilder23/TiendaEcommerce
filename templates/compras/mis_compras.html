@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/productos/listar_productos.css' %}">
+{% endblock %}
+{% block content %}
+<section>
+  <h2>Mis compras</h2>
+  {% if orders %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Vendedor</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Motivo</th>
+        <th>Comprobante</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for o in orders %}
+      <tr>
+        <td>{{ o.seller.username }}</td>
+        <td>${{ o.total }}</td>
+        <td>{{ o.get_status_display }}</td>
+        <td>{% if o.status == 'rejected' %}{{ o.rejection_reason }}{% else %}—{% endif %}</td>
+        <td>{% if o.receipt %}<a href="{{ o.receipt.url }}" target="_blank">Ver</a>{% else %}N/A{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No tienes compras.</p>
+  {% endif %}
+</section>
+{% endblock %}

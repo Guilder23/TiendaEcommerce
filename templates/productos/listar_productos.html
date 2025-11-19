@@ -66,9 +66,11 @@
               data-photo-url="{% if p.photo %}{{ p.photo.url }}{% endif %}">
           Ver detalles
         </button>
-        <button class="btn-cart" title="Añadir al carrito">
+        {% if request.user.is_authenticated and request.user.profile.role == 'buyer' %}
+        <button class="btn-cart" title="Añadir al carrito" data-product-id="{{ p.id }}">
           <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-0.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l0.02-.12 0.9-1.63h7.45c0.75 0 1.41-.41 1.75-1.03l3.58-6.49c0.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-0.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s0.89 2 1.99 2 2-0.9 2-2-0.9-2-2-2z"/></svg>
         </button>
+        {% endif %}
       </div>
     </div>
     {% empty %}
@@ -81,4 +83,30 @@
 {% block page_scripts %}
 <script src="{% static 'js/productos/ver.js' %}"></script>
 <script src="{% static 'js/productos/buscar.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.btn-cart').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      const id = this.getAttribute('data-product-id');
+      if(!id) return;
+      var csrftoken = (function(){
+        var name='csrftoken';var cookies=document.cookie.split(';');
+        for(var i=0;i<cookies.length;i++){var c=cookies[i].trim();if(c.substring(0,name.length+1)===(name+'=')){return decodeURIComponent(c.substring(name.length+1));}}
+        return '';
+      })();
+      fetch('/cart/add/' + id + '/', {method: 'POST', headers: {'X-CSRFToken': csrftoken}})
+        .then(r=>r.json())
+        .then(data=>{
+          if(data.ok){
+            const el = document.getElementById('cart-count');
+            if(el){ el.textContent = data.count; }
+          } else {
+            alert(data.message || 'No se pudo agregar');
+          }
+        })
+        .catch(()=>{});
+    });
+  });
+});
+</script>
 {% endblock %}

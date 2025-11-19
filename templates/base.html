@@ -19,6 +19,26 @@
     <nav class="navbar">
       {% if request.user.is_authenticated %}
         <span class="navbar__user">{{ request.user.username }}</span>
+        {% if request.user.profile.role == 'buyer' %}
+        <button id="navbar-cart" class="navbar__icon" title="Carrito" aria-label="Carrito">
+          <svg viewBox="0 0 24 24" width="20" height="20" style="margin-right:6px"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-0.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l0.02-.12 0.9-1.63h7.45c0.75 0 1.41-.41 1.75-1.03l3.58-6.49c0.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-0.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s0.89 2 1.99 2 2-0.9 2-2-0.9-2-2-2z"></path></svg>
+          <span id="cart-count" class="navbar__badge">0</span>
+        </button>
+        <div id="cart-dropdown" class="cart-dropdown" style="position:absolute; right:12px; top:56px; background:#fff; border:1px solid #e5e7eb; box-shadow:0 12px 24px rgba(17,24,39,.08); border-radius:10px; width:320px; padding:12px; display:none; z-index:1000;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <strong>Tu carrito</strong>
+            <button type="button" id="cart-close" class="btn btn--secondary" style="padding:4px 8px;">Cerrar</button>
+          </div>
+          <div id="cart-items"></div>
+          <div id="cart-total" style="margin-top:8px; font-weight:600;"></div>
+          <div style="margin-top:10px; display:flex; justify-content:flex-end;">
+            <a href="{% url 'checkout' %}" class="btn">Comprar</a>
+          </div>
+        </div>
+        {% endif %}
+        <button id="navbar-bell" class="navbar__icon" title="Notificaciones">
+          <span id="notif-count" class="navbar__badge">0</span>
+        </button>
         <a href="{% url 'logout' %}" class="btn btn--secondary">Cerrar sesión</a>
       {% else %}
         <a href="{% url 'home' %}" class="navbar__link">inicio</a>
@@ -52,6 +72,16 @@
           <a href="{% url 'profile' %}" class="sidebar__item" title="Mi perfil">
             <span class="sidebar__text">Mi perfil</span>
           </a>
+          {% if request.user.profile.role == 'buyer' %}
+          <a href="{% url 'purchases_list' %}" class="sidebar__item" title="Mis compras">
+            <span class="sidebar__text">Mis compras</span>
+          </a>
+          {% endif %}
+          {% if request.user.profile.role == 'admin' %}
+          <a href="{% url 'sales_list' %}" class="sidebar__item" title="Mis ventas">
+            <span class="sidebar__text">Mis ventas</span>
+          </a>
+          {% endif %}
           
           <a href="{% url 'users_list' %}" class="sidebar__item" title="Usuarios">
             <span class="sidebar__text">Usuarios</span>
@@ -79,5 +109,10 @@
   <script src="{% static 'js/sidebar.js' %}"></script>
   {% endif %}
   {% block page_scripts %}{% endblock %}
+  
+  <script src="{% static 'js/notifications.js' %}"></script>
+  {% if request.user.is_authenticated %}
+  <script src="{% static 'js/cart.js' %}"></script>
+  {% endif %}
 </body>
 <html>

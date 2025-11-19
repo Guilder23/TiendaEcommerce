@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.db import transaction
-from .models import Product, Profile
+from django.http import JsonResponse
+from decimal import Decimal
+from .models import Product, Profile, CartItem, Order, OrderItem, Notification
 
 def home(request):
     return render(request, 'store/home.html')
@@ -299,3 +301,166 @@ def user_delete(request, pk):
     user.delete()
     messages.info(request, 'Usuario eliminado')
     return redirect('users_list')
+
+#--------------------------------------------------------------------------
+# CARRITO
+@login_required
+def cart_add(request, pk):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'buyer':
+        return JsonResponse({'ok': False, 'message': 'Solo compradores pueden agregar al carrito'})
+    try:
+        p = Product.objects.get(pk=pk, status='published')
+    except Product.DoesNotExist:
+        return JsonResponse({'ok': False, 'message': 'Producto no disponible'})
+    seller = p.owner
+    if CartItem.objects.filter(user=request.user).exists():
+        current_seller = CartItem.objects.filter(user=request.user).first().product.owner
+        if current_seller != seller:
+            return JsonResponse({'ok': False, 'message': 'El carrito solo admite productos de un vendedor a la vez'})
+    item, created = CartItem.objects.get_or_create(user=request.user, product=p)
+    if not created:
+        item.quantity += 1
+        item.save()
+    count = CartItem.objects.filter(user=request.user).count()
+    return JsonResponse({'ok': True, 'count': count})
+
+@login_required
+def cart_list_json(request):
+    items = CartItem.objects.filter(user=request.user)
+    data = []
+    total = Decimal('0')
+    for it in items:
+        total += Decimal(str(it.product.price)) * it.quantity
+        data.append({'id': it.id, 'product': it.product.name, 'price': str(it.product.price), 'quantity': it.quantity})
+    return JsonResponse({'items': data, 'total': str(total)})
+
+@login_required
+def cart_count_json(request):
+    count = CartItem.objects.filter(user=request.user).count()
+    return JsonResponse({'count': count})
+
+@login_required
+def cart_remove(request, item_id):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'buyer':
+        return JsonResponse({'ok': False})
+    try:
+        item = CartItem.objects.get(id=item_id, user=request.user)
+    except CartItem.DoesNotExist:
+        return JsonResponse({'ok': False})
+    item.delete()
+    count = CartItem.objects.filter(user=request.user).count()
+    return JsonResponse({'ok': True, 'count': count})
+
+@login_required
+def checkout(request):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'buyer':
+        messages.error(request, 'Solo compradores pueden comprar')
+        return redirect('product_list')
+    items = CartItem.objects.filter(user=request.user)
+    if not items.exists():
+        messages.info(request, 'Tu carrito está vacío')
+        return redirect('product_list')
+    seller = items.first().product.owner
+    total = Decimal('0')
+    for it in items:
+        total += Decimal(str(it.product.price)) * it.quantity
+    seller_profile, _ = Profile.objects.get_or_create(user=seller)
+    return render(request, 'checkout/checkout.html', {'items': items, 'total': total, 'seller': seller, 'seller_profile': seller_profile})
+
+@login_required
+def checkout_submit(request):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'buyer':
+        return redirect('product_list')
+    if request.method != 'POST':
+        return redirect('checkout')
+    items = CartItem.objects.filter(user=request.user)
+    if not items.exists():
+        return redirect('product_list')
+    seller = items.first().product.owner
+    total = Decimal('0')
+    for it in items:
+        total += Decimal(str(it.product.price)) * it.quantity
+    receipt = request.FILES.get('receipt')
+    order = Order.objects.create(buyer=request.user, seller=seller, total=total, receipt=receipt or None)
+    for it in items:
+        OrderItem.objects.create(order=order, product=it.product, quantity=it.quantity, price_snapshot=it.product.price)
+    items.delete()
+    Notification.objects.create(user=seller, message='Comprobante recibido de compra')
+    Notification.objects.create(user=request.user, message='Comprobante enviado')
+    messages.success(request, 'Compra enviada al vendedor')
+    return redirect('purchases_list')
+
+#--------------------------------------------------------------------------
+# VENTAS ADMIN
+@login_required
+def sales_list(request):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        messages.error(request, 'Solo administradores')
+        return redirect('home')
+    orders = Order.objects.filter(seller=request.user).order_by('-created_at')
+    return render(request, 'ventas/mis_ventas.html', {'orders': orders})
+
+@login_required
+def sales_confirm(request, pk):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        return redirect('home')
+    try:
+        order = Order.objects.get(pk=pk, seller=request.user)
+    except Order.DoesNotExist:
+        return redirect('sales_list')
+    order.status = 'confirmed'
+    order.save()
+    for it in order.items.all():
+        prod = it.product
+        prod.status = 'sold'
+        prod.save()
+    Notification.objects.create(user=order.buyer, message='Compra confirmada')
+    messages.success(request, 'Compra confirmada')
+    return redirect('sales_list')
+
+@login_required
+def sales_reject(request, pk):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        return redirect('home')
+    try:
+        order = Order.objects.get(pk=pk, seller=request.user)
+    except Order.DoesNotExist:
+        return redirect('sales_list')
+    reason = request.POST.get('reason', '').strip()
+    order.status = 'rejected'
+    order.rejection_reason = reason
+    order.save()
+    Notification.objects.create(user=order.buyer, message='Compra rechazada: ' + (reason or ''))
+    messages.info(request, 'Compra rechazada')
+    return redirect('sales_list')
+
+#--------------------------------------------------------------------------
+# COMPRAS BUYER
+@login_required
+def purchases_list(request):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'buyer':
+        messages.error(request, 'Solo compradores')
+        return redirect('home')
+    orders = Order.objects.filter(buyer=request.user).order_by('-created_at')
+    return render(request, 'compras/mis_compras.html', {'orders': orders})
+
+#--------------------------------------------------------------------------
+# NOTIFICACIONES
+@login_required
+def notifications_count_json(request):
+    count = Notification.objects.filter(user=request.user, is_read=False).count()
+    return JsonResponse({'count': count})
+
+@login_required
+def notifications_list_json(request):
+    qs = Notification.objects.filter(user=request.user).order_by('-created_at')[:3]
+    data = [{'id': n.id, 'message': n.message} for n in qs]
+    return JsonResponse({'items': data})
