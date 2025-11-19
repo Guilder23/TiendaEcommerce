@@ -98,8 +98,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: #d9247e;
+  box-shadow: 0 0 0 3px rgba(217, 36, 126, 0.1);
 }
 
 /* =============================== */
@@ -131,7 +131,7 @@
 .btn-save {
   flex: 1;
   padding: 10px 16px;
-  background: #f59e0b;
+  background: #d9247e;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -141,8 +141,8 @@
 }
 
 .btn-save:hover {
-  background: #d97706;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  background: #e61278;
+  box-shadow: 0 4px 12px rgba(217, 36, 126, 0.3);
 }
 
 .btn-save:disabled {

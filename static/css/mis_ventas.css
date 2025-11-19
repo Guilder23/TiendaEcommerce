@@ -82,7 +82,7 @@ h2 {
   padding: 7px 15px;
   border: none;
   border-radius: 6px;
-  background-color: #4caf50;
+  background-color: #d9247e;
   color: #fff;
   font-size: 14px;
   cursor: pointer;
@@ -90,7 +90,7 @@ h2 {
 }
 
 .btn:hover {
-  background-color: #45a049;
+  background-color: #e61278;
 }
 
 .btn--secondary {
@@ -103,7 +103,7 @@ h2 {
 
 /* Links */
 a {
-  color: #4e54c8;
+  color: #d9247e;
   text-decoration: none;
 }
 
@@ -162,8 +162,8 @@ p {
 .form select:focus,
 .form textarea:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+  border-color: #d9247e;
+  box-shadow: 0 0 0 4px rgba(217,36,126,0.15);
 }
 
 @media (max-width:560px) {

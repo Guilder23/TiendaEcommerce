@@ -27,7 +27,7 @@
 }
 
 .btn-create-product {
-  background: #10b981;
+  background: #d9247e;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -43,8 +43,8 @@
 }
 
 .btn-create-product:hover {
-  background: #059669;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  background: #e61278;
+  box-shadow: 0 4px 12px rgba(217, 36, 126, 0.3);
 }
 
 /* ===== PRODUCTS TABLE ===== */
@@ -114,7 +114,7 @@
 
 .product-price {
   font-weight: 700;
-  color: #10b981;
+  color: #d9247e;
   font-size: 1.05rem;
 }
 
@@ -197,12 +197,12 @@
 }
 
 .btn-action.btn-status {
-  color: #7c3aed;
+  color: #d9247e;
 }
 
 .btn-action.btn-status:hover {
-  background: #f5f3ff;
-  border-color: #7c3aed;
+  background: #f8d5e5;
+  border-color: #d9247e;
 }
 
 /* ===== EMPTY STATE ===== */
@@ -232,7 +232,7 @@
 }
 
 .empty-state__btn {
-  background: #10b981;
+  background: #d9247e;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -246,7 +246,7 @@
 }
 
 .empty-state__btn:hover {
-  background: #059669;
+  background: #e61278;
 }
 
 /* ===== RESPONSIVE ===== */

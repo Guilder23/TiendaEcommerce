@@ -6,7 +6,7 @@
  } 
 
 .sidebar {
-    background: #0b141a;
+    background: #491235;
     color: #fff;
     height: calc(100vh - 64px);
     position: fixed;
@@ -34,7 +34,7 @@
 }
 
 .sidebar__item:hover {
-    background: #202c33;
+    background: #6b1d3c;
     text-decoration: none;
 }
 

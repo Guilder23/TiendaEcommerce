@@ -9,7 +9,7 @@
 .perfil h2{margin:0 0 12px}
 .perfil__card h3{margin:0 0 8px}
 .perfil .form input,.perfil .form textarea{width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font-size:15px}
-.perfil .form input:focus,.perfil .form textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.15)}
+.perfil .form input:focus,.perfil .form textarea:focus{outline:none;border-color:#d9247e;box-shadow:0 0 0 4px rgba(217,36,126,.15)}
 @media (max-width:920px){.perfil__grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.perfil__grid{grid-template-columns:1fr}}
  .perfil__qr{margin-top:10px}

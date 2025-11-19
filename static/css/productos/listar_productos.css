@@ -31,8 +31,8 @@
 
 .search-input:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: #d9247e;
+  box-shadow: 0 0 0 3px rgba(217, 36, 126, 0.1);
 }
 
 .search-icon {
@@ -73,36 +73,36 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #2563eb;
+  background: #d9247e;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 2px 6px rgba(217, 36, 126, 0.4);
   transition: all 0.2s;
 }
 
 .price-slider::-webkit-slider-thumb:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 4px 12px rgba(217, 36, 126, 0.5);
 }
 
 .price-slider::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #2563eb;
+  background: #d9247e;
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 2px 6px rgba(217, 36, 126, 0.4);
   transition: all 0.2s;
 }
 
 .price-slider::-moz-range-thumb:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 4px 12px rgba(217, 36, 126, 0.5);
 }
 
 #price-value {
   font-weight: 600;
-  color: #2563eb;
+  color: #d9247e;
   min-width: 70px;
   text-align: right;
 }
@@ -185,7 +185,7 @@
 .product-price {
   font-size: 1rem;
   font-weight: 600;
-  color: #2563eb;
+  color: #d9247e;
 }
 
 .product-status {
@@ -212,14 +212,14 @@
   font-weight: 500;
   border: none;
   border-radius: 8px;
-  background-color: #2563eb;
+  background-color: #d9247e;
   color: #fff;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
 
 .product-card .btn:hover {
-  background-color: #1d4ed8;
+  background-color: #e61278;
   transform: translateY(-2px);
 }
 
@@ -230,10 +230,10 @@
   width: 40px;
   height: 40px;
   padding: 0;
-  border: 2px solid #2563eb;
+  border: 2px solid #d9247e;
   border-radius: 8px;
   background-color: #fff;
-  color: #2563eb;
+  color: #d9247e;
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
@@ -246,7 +246,7 @@
 }
 
 .btn-cart:hover {
-  background-color: #2563eb;
+  background-color: #d9247e;
   color: #fff;
   transform: translateY(-2px);
 }

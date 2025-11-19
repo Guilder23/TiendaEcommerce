@@ -2,7 +2,7 @@
 /* BOTÓN CREAR PRODUCTO */
 /* --------------------------------------- */
 .btn-crear_producto {
-    background-color: #1b1b1b;
+    background-color: #e61278;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -15,7 +15,7 @@
     border-radius: 5px;
 }
 .btn-crear_producto:hover {
-    background-color: #111;
+    background-color: #d9247e;
 }
 
 /* --------------------------------------- */

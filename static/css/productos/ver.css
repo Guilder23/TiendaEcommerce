@@ -91,14 +91,14 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background: #2563eb;
+  background: #d9247e;
   color: white;
   font-weight: 500;
   transition: 0.2s;
 }
 
 .btn:hover {
-  background: #1d4ed8;
+  background: #e61278;
 }
 
 .btn--secondary {
