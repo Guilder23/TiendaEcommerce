@@ -1,0 +1,54 @@
+{% load static %}
+<section>
+  <h2>Mis productos</h2>
+    <button class="btn-crear_producto" data-open="product-create-modal" title="Crear producto">
+        <span class="sidebar__text">Crear producto</span>
+    </button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in products %}
+      <tr>
+        <td>
+          {% if p.photo %}
+            <img src="{{ p.photo.url }}" alt="{{ p.name }}" class="thumb">
+          {% endif %}
+        </td>
+        <td>{{ p.name }}</td>
+        <td>${{ p.price }}</td>
+        <td>{{ p.get_status_display }}</td>
+        <td class="actions">
+          <button class="icon-btn" title="Ver" data-open="product-view-modal"
+                  data-name="{{ p.name }}" data-description="{{ p.description }}" data-price="{{ p.price }}"
+                  data-status="{{ p.get_status_display }}" data-photo-url="{% if p.photo %}{{ p.photo.url }}{% endif %}">
+            <svg viewBox="0 0 24 24"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/></svg>
+          </button>
+          <button class="icon-btn" title="Editar" data-open="product-edit-modal"
+                  data-edit-url="{% url 'product_edit' p.pk %}" data-name="{{ p.name }}"
+                  data-description="{{ p.description }}" data-price="{{ p.price }}" data-status="{{ p.status }}">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm19.71-11.04a1 1 0 000-1.41l-2.5-2.5a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.99-1.67z"/></svg>
+          </button>
+          <button class="icon-btn" title="Eliminar" data-open="product-delete-modal"
+                  data-delete-url="{% url 'product_delete' p.pk %}" data-name="{{ p.name }}">
+            <svg viewBox="0 0 24 24"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          </button>
+          <button class="icon-btn" title="Estado" data-open="product-status-modal"
+                  data-status-url="{% url 'product_set_status' p.pk %}" data-status="{{ p.status }}">
+            <svg viewBox="0 0 24 24"><path d="M6 3v18l6-3 6 3V3H6z"/></svg>
+          </button>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No tienes productos aún.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>

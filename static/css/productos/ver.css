@@ -1,0 +1,137 @@
+/* estilos específicos del modal ver *//* ===== Modal base ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal[hidden] {
+  display: none !important;
+}
+
+/* ===== Fondo oscuro ===== */
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+/* ===== Panel del modal ===== */
+.modal__dialog {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  padding: 1.5rem;
+  width: 360px;
+  max-width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+  animation: modalFade 0.25s ease-out;
+  text-align: center;
+}
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Título ===== */
+#product-view-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* ===== Imagen ===== */
+#product-view-img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+/* ===== Descripción ===== */
+#product-view-desc {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== Precio y estado ===== */
+#product-view-price,
+#product-view-status {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== Acciones ===== */
+.modal__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* ===== Botones ===== */
+.btn {
+  padding: 0.55rem 1rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #1d4ed8;
+}
+
+.btn--secondary {
+  background: #e5e7eb;
+  color: #111;
+}
+
+.btn--secondary:hover {
+  background: #d1d5db;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .modal__dialog {
+    padding: 1rem;
+  }
+
+  #product-view-title {
+    font-size: 1rem;
+  }
+
+  #product-view-desc,
+  #product-view-price,
+  #product-view-status {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .modal__actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

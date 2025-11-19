@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from .models import Product
 
 def home(request):
     return render(request, 'store/home.html')
@@ -44,3 +47,94 @@ def logout_view(request):
     logout(request)
     messages.info(request, 'Sesión cerrada')
     return redirect('home')
+
+#--------------------------------------------------------------------------
+# GESTION DE PRODUCTOS
+def product_list(request):
+    products = Product.objects.filter(status='published').order_by('-created_at')
+    return render(request, 'productos/listar_productos.html', {'products': products})
+
+@login_required
+def my_products(request):
+    products = Product.objects.filter(owner=request.user).order_by('-created_at')
+    return render(request, 'productos/mis_productos.html', {'products': products})
+
+@login_required
+def product_create(request):
+    if request.method == 'GET':
+        return redirect('my_products')
+    with transaction.atomic():
+        name = request.POST.get('name', '').strip()
+        description = request.POST.get('description', '').strip()
+        price = request.POST.get('price', '').strip()
+        status = request.POST.get('status', 'draft')
+        photo = request.FILES.get('photo')
+        if not name or not price:
+            messages.error(request, 'Nombre y precio son obligatorios')
+            return redirect('my_products')
+        try:
+            p = Product(owner=request.user, name=name, description=description, price=price, status=status)
+            if photo:
+                p.photo = photo
+            p.save()
+            messages.success(request, 'Producto creado')
+            return redirect('my_products')
+        except Exception:
+            messages.error(request, 'Error al crear producto')
+            return redirect('my_products')
+
+@login_required
+def product_edit(request, pk):
+    try:
+        p = Product.objects.get(pk=pk, owner=request.user)
+    except Product.DoesNotExist:
+        messages.error(request, 'Producto no encontrado')
+        return redirect('my_products')
+    if request.method == 'GET':
+        return redirect('my_products')
+    with transaction.atomic():
+        p.name = request.POST.get('name', '').strip()
+        p.description = request.POST.get('description', '').strip()
+        p.price = request.POST.get('price', '').strip()
+        p.status = request.POST.get('status', p.status)
+        photo = request.FILES.get('photo')
+        if photo:
+            p.photo = photo
+        p.save()
+        messages.success(request, 'Producto actualizado')
+        return redirect('my_products')
+
+@login_required
+def product_set_status(request, pk):
+    if request.method != 'POST':
+        return redirect('my_products')
+    try:
+        p = Product.objects.get(pk=pk, owner=request.user)
+    except Product.DoesNotExist:
+        messages.error(request, 'Producto no encontrado')
+        return redirect('my_products')
+    s = request.POST.get('status')
+    if s not in ['draft', 'published', 'sold']:
+        messages.error(request, 'Estado inválido')
+        return redirect('my_products')
+    p.status = s
+    p.save()
+    if s == 'published':
+        messages.success(request, 'Producto publicado')
+    elif s == 'draft':
+        messages.info(request, 'Producto cambiado a borrador')
+    else:
+        messages.info(request, 'Producto marcado como vendido')
+    return redirect('my_products')
+
+@login_required
+def product_delete(request, pk):
+    try:
+        p = Product.objects.get(pk=pk, owner=request.user)
+    except Product.DoesNotExist:
+        messages.error(request, 'Producto no encontrado')
+        return redirect('my_products')
+    p.status = 'draft'
+    p.save()
+    messages.info(request, 'Producto eliminado')
+    return redirect('my_products')

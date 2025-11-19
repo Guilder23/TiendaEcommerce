@@ -1,0 +1,138 @@
+/* --------------------------------------- */
+/* BOTÓN CREAR PRODUCTO */
+/* --------------------------------------- */
+.btn-crear_producto {
+    background-color: #1b1b1b;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn-crear_producto:hover {
+    background-color: #111;
+}
+
+/* --------------------------------------- */
+/* TABLA */
+/* --------------------------------------- */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+.table th,
+.table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+.table thead th {
+    background: #f9fafb;
+    font-weight: 600;
+}
+.table tr:hover {
+    background: #f8fafc;
+}
+
+/* --------------------------------------- */
+/* MINIATURA */
+/* --------------------------------------- */
+.thumb {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+/* --------------------------------------- */
+/* ACCIONES */
+/* --------------------------------------- */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+.icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+}
+.icon-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #111;
+}
+.icon-btn:hover {
+    background: #f3f4f6;
+}
+
+/* --------------------------------------- */
+/* MODAL */
+/* --------------------------------------- */
+.modal[hidden] {
+    display: none;
+}
+.modal {
+    position: fixed;
+    inset: 0;
+}
+.modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+}
+.modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 540px;
+    margin: 10vh auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+/* --------------------------------------- */
+/* RESPONSIVE */
+/* --------------------------------------- */
+@media (max-width: 600px) {
+    .table th, .table td {
+        padding: 8px 6px;
+        font-size: 14px;
+    }
+
+    .thumb {
+        width: 48px;
+        height: 48px;
+    }
+
+    .actions {
+        gap: 4px;
+    }
+    .icon-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .btn-crear_producto {
+        width: 100%;
+        text-align: center;
+    }
+
+    .modal__dialog {
+        margin: 5vh 16px;
+        padding: 16px;
+    }
+}

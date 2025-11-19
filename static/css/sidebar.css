@@ -1,0 +1,14 @@
+.page-with-sidebar { margin-left: 240px }
+.sidebar { background: #0b141a; color: #fff; height: calc(100vh - 64px); position: fixed; top: 64px; left: 0; width: 240px }
+.sidebar__list { display: flex; flex-direction: column; align-items: stretch; padding: 8px; gap: 6px }
+.sidebar__item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer }
+.sidebar__item:hover { background: #202c33 }
+.sidebar__item svg { width: 20px; height: 20px; fill: #d1d5db }
+.sidebar__text { color: #fff; font-size: 14px }
+
+@media (max-width: 640px) {
+  .page-with-sidebar { margin-left: 0 }
+  .sidebar { position: fixed; left: 0; top: 64px; width: 200px }
+  .sidebar__list { flex-direction: row; justify-content: space-around }
+  .sidebar__text { display: none }
+}

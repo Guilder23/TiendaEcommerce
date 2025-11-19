@@ -1,0 +1,14 @@
+<div class="modal" id="product-delete-modal" hidden>
+  <div class="modal__dialog">
+    <h3>Eliminar producto</h3>
+    <p id="product-delete-name"></p>
+    <form id="product-delete-form" action="#" method="post">
+      {% csrf_token %}
+      <div class="modal__actions">
+        <button type="submit" class="btn">Eliminar</button>
+        <button type="button" class="btn btn--secondary" data-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal__backdrop" data-close></div>
+</div>

@@ -1,0 +1,134 @@
+/* estilos específicos del modal editar *//* --------------------------------------- */
+/* MODAL GENERAL */
+/* --------------------------------------- */
+.modal[hidden] {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+}
+
+/* --------------------------------------- */
+/* DIALOGO DEL MODAL (REDUCIDO) */
+/* --------------------------------------- */
+.modal__dialog {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 440px;
+    background: #fff;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+    animation: modalFade .22s ease-out;
+}
+
+@keyframes modalFade {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------- */
+/* FORMULARIO */
+/* --------------------------------------- */
+.form label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form input[type="text"],
+.form input[type="number"],
+.form input[type="file"],
+.form textarea,
+.form select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px 10px;
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s;
+}
+
+.form textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+    border-color: #111;
+}
+
+/* --------------------------------------- */
+/* ACCIONES */
+/* --------------------------------------- */
+.modal__actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.btn {
+    background-color: #1b1b1b;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background-color: #111;
+}
+
+.btn--secondary {
+    background: #e5e7eb;
+    color: #111;
+}
+
+.btn--secondary:hover {
+    background: #d1d5db;
+}
+
+/* --------------------------------------- */
+/* RESPONSIVE */
+/* --------------------------------------- */
+@media (max-width: 600px) {
+    .modal__dialog {
+        margin: 0 14px;
+        padding: 14px;
+    }
+
+    .modal__actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+
+    .btn,
+    .btn--secondary {
+        width: 100%;
+        padding: 10px;
+    }
+}

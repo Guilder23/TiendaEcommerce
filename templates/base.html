@@ -7,8 +7,8 @@
   <title>Tienda</title>
   <link rel="icon" href="{% static 'img/favicon.ico' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <link rel="stylesheet" href="{% static 'css/acceso/login.css' %}">
-  <link rel="stylesheet" href="{% static 'css/acceso/registro.css' %}">
+  <link rel="stylesheet" href="{% static 'css/login_modal.css' %}">
+  <link rel="stylesheet" href="{% static 'css/register_modal.css' %}">
   {% block page_styles %}{% endblock %}
 </head>
 <body>
@@ -17,8 +17,10 @@
     <nav class="nav">
       {% if request.user.is_authenticated %}
         <span class="nav__user">Hola, {{ request.user.username }}</span>
+        <a href="{% url 'product_list' %}" class="btn">Ver publicados</a>
         <a href="{% url 'logout' %}" class="btn btn--secondary">Cerrar sesión</a>
       {% else %}
+        <a href="{% url 'product_list' %}" class="btn">Ver publicados</a>
         <button class="btn" data-open="login-modal">Iniciar sesión</button>
         <button class="btn btn--secondary" data-open="register-modal">Registrarse</button>
       {% endif %}
@@ -37,7 +39,8 @@
   {% include 'acceso/login.html' %}
   {% include 'acceso/registro.html' %}
   <script src="{% static 'js/main.js' %}"></script>
-  <script src="{% static 'js/acceso/login.js' %}"></script>
-  <script src="{% static 'js/acceso/registro.js' %}"></script>
+  <script src="{% static 'js/login_modal.js' %}"></script>
+  <script src="{% static 'js/register_modal.js' %}"></script>
+  {% block page_scripts %}{% endblock %}
 </body>
 <html>

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/productos/productos.css' %}">
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'css/productos/crear.css' %}">
+<link rel="stylesheet" href="{% static 'css/productos/editar.css' %}">
+<link rel="stylesheet" href="{% static 'css/productos/eliminar.css' %}">
+<link rel="stylesheet" href="{% static 'css/productos/ver.css' %}">
+<link rel="stylesheet" href="{% static 'css/productos/estado.css' %}">
+{% endblock %}
+{% block content %}
+<div class="page-with-sidebar">
+  <aside class="sidebar">
+    <div class="sidebar__list">
+      <a href="{% url 'my_products' %}" class="sidebar__item" title="Mis productos">
+        <span class="sidebar__text">Mis productos</span>
+      </a>
+      <!-- <button class="sidebar__item" data-open="product-create-modal" title="Crear producto">
+        <span class="sidebar__text">Crear producto</span>
+      </button> -->
+    </div>
+  </aside>
+  <section>
+    {% include 'productos/productos.html' %}
+  </section>
+</div>
+{% include 'productos/crear.html' %}
+{% include 'productos/editar.html' %}
+{% include 'productos/eliminar.html' %}
+{% include 'productos/ver.html' %}
+{% include 'productos/estado.html' %}
+{% endblock %}
+{% block page_scripts %}
+<script src="{% static 'js/productos/productos.js' %}"></script>
+<script src="{% static 'js/productos/crear.js' %}"></script>
+<script src="{% static 'js/productos/editar.js' %}"></script>
+<script src="{% static 'js/productos/eliminar.js' %}"></script>
+<script src="{% static 'js/productos/ver.js' %}"></script>
+<script src="{% static 'js/productos/estado.js' %}"></script>
+<script src="{% static 'js/sidebar.js' %}"></script>
+{% endblock %}

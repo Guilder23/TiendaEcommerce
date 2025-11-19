@@ -1,0 +1,18 @@
+<div class="modal" id="product-status-modal" hidden>
+  <div class="modal__dialog">
+    <h3>Cambiar estado</h3>
+    <form id="product-status-form" action="#" method="post" class="form">
+      {% csrf_token %}
+      <select name="status">
+        <option value="draft">Borrador</option>
+        <option value="published">Publicado</option>
+        <option value="sold">Vendido</option>
+      </select>
+      <div class="modal__actions">
+        <button type="submit" class="btn">Guardar</button>
+        <button type="button" class="btn btn--secondary" data-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal__backdrop" data-close></div>
+</div>
