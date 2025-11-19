@@ -19,9 +19,10 @@
     <nav class="navbar">
       {% if request.user.is_authenticated %}
         <span class="navbar__user">{{ request.user.username }}</span>
-        <a href="{% url 'product_list' %}" class="navbar__link">Productos</a>
         <a href="{% url 'logout' %}" class="btn btn--secondary">Cerrar sesión</a>
       {% else %}
+        <a href="{% url 'home' %}" class="navbar__link">inicio</a>
+        <a href="{% url 'product_list' %}" class="navbar__link">Productos</a>
         <button class="btn btn--secondary" data-open="login-modal">Iniciar sesión</button>
         <button class="btn" data-open="register-modal">Registrarse</button>
       {% endif %}
