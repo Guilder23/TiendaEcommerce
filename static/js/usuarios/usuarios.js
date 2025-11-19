@@ -98,29 +98,9 @@ function closeModal(modal) {
 }
 
 function populateViewModal(userData) {
-  const viewBody = document.getElementById('user-view-body');
-  if (viewBody) {
-    viewBody.innerHTML = `
-      <div class="user-info-item">
-        <div class="user-info-label">Nombre</div>
-        <div class="user-info-value">Bs{userData.name || 'N/A'}</div>
-      </div>
-      <div class="user-info-item">
-        <div class="user-info-label">Email</div>
-        <div class="user-info-value">Bs{userData.email || 'N/A'}</div>
-      </div>
-      <div class="user-info-item">
-        <div class="user-info-label">Teléfono</div>
-        <div class="user-info-value">Bs{userData.phone || 'N/A'}</div>
-      </div>
-      <div class="user-info-item">
-        <div class="user-info-label">Dirección</div>
-        <div class="user-info-value">Bs{userData.address || 'N/A'}</div>
-      </div>
-      <div class="user-info-item">
-        <div class="user-info-label">Rol</div>
-        <div class="user-info-value">Bs{userData.role || 'N/A'}</div>
-      </div>
-    `;
-  }
+  document.getElementById('view-name').textContent = userData.name || '-';
+  document.getElementById('view-email').textContent = userData.email || '-';
+  document.getElementById('view-phone').textContent = userData.phone || 'N/A';
+  document.getElementById('view-address').textContent = userData.address || 'N/A';
+  document.getElementById('view-role').textContent = userData.role || '-';
 }
