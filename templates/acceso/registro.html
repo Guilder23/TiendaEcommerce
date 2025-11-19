@@ -1,0 +1,21 @@
+<div class="modal" id="register-modal" hidden>
+  <div class="modal__dialog">
+    <h3>Crear cuenta</h3>
+    <form action="{% url 'register' %}" method="post">
+      {% csrf_token %}
+      <label>Usuario</label>
+      <input type="text" name="username" required>
+      <label>Email (opcional)</label>
+      <input type="email" name="email">
+      <label>Contraseña</label>
+      <input type="password" name="password" required>
+      <label>Confirmar contraseña</label>
+      <input type="password" name="password2" required>
+      <div class="modal__actions">
+        <button type="submit" class="btn">Registrarse</button>
+        <button type="button" class="btn btn--secondary" data-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal__backdrop" data-close></div>
+</div>

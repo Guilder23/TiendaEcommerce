@@ -1,0 +1,55 @@
+.modal[hidden] {
+  display: none;
+}
+
+#login-modal.modal {
+  position: fixed;
+  inset: 0;
+}
+
+#login-modal .modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#login-modal .modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  max-width: 420px;
+  margin: 5vh auto;
+  background: #fff;
+  padding: clamp(16px, 4vw, 20px);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+#login-modal .modal__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+  #login-modal .modal__dialog {
+    width: 95%;
+    margin: 2vh auto;
+    padding: 16px;
+  }
+  
+  #login-modal .modal__actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* Responsive para tablets */
+@media (max-width: 768px) and (min-width: 481px) {
+  #login-modal .modal__dialog {
+    width: 85%;
+    margin: 8vh auto;
+  }
+}

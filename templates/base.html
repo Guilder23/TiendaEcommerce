@@ -6,11 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tienda</title>
   <link rel="icon" href="{% static 'img/favicon.ico' %}">
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/acceso/login.css' %}">
+  <link rel="stylesheet" href="{% static 'css/acceso/registro.css' %}">
+  {% block page_styles %}{% endblock %}
 </head>
 <body>
   <header>
     <h1>Tienda</h1>
+    <nav class="nav">
+      {% if request.user.is_authenticated %}
+        <span class="nav__user">Hola, {{ request.user.username }}</span>
+        <a href="{% url 'logout' %}" class="btn btn--secondary">Cerrar sesión</a>
+      {% else %}
+        <button class="btn" data-open="login-modal">Iniciar sesión</button>
+        <button class="btn btn--secondary" data-open="register-modal">Registrarse</button>
+      {% endif %}
+    </nav>
   </header>
   <main>
     {% if messages %}
@@ -22,6 +34,10 @@
     {% endif %}
     {% block content %}{% endblock %}
   </main>
+  {% include 'acceso/login.html' %}
+  {% include 'acceso/registro.html' %}
   <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/acceso/login.js' %}"></script>
+  <script src="{% static 'js/acceso/registro.js' %}"></script>
 </body>
 <html>
