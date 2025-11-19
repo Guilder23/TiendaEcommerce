@@ -10,21 +10,9 @@
 <link rel="stylesheet" href="{% static 'css/productos/estado.css' %}">
 {% endblock %}
 {% block content %}
-<div class="page-with-sidebar">
-  <aside class="sidebar">
-    <div class="sidebar__list">
-      <a href="{% url 'my_products' %}" class="sidebar__item" title="Mis productos">
-        <span class="sidebar__text">Mis productos</span>
-      </a>
-      <!-- <button class="sidebar__item" data-open="product-create-modal" title="Crear producto">
-        <span class="sidebar__text">Crear producto</span>
-      </button> -->
-    </div>
-  </aside>
-  <section>
-    {% include 'productos/productos.html' %}
-  </section>
-</div>
+<section>
+{% include 'productos/productos.html' %}
+</section>
 {% include 'productos/crear.html' %}
 {% include 'productos/editar.html' %}
 {% include 'productos/eliminar.html' %}

@@ -4,8 +4,107 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 {% block content %}
-<section>
-  <h2>Bienvenido a la tienda</h2>
-  <p>Comienza a construir tu e‑commerce.</p>
-</section>
+<div class="landing">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__content">
+      <h1 class="hero__title">Tu tienda en línea, tu forma</h1>
+      <p class="hero__subtitle">Publica, gestiona y vende tus productos con una plataforma moderna, rápida y profesional.</p>
+      <div class="hero__buttons">
+        <a href="{% url 'product_list' %}" class="btn btn--primary">Explorar productos</a>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'my_products' %}" class="btn btn--outline">Mis productos</a>
+        {% else %}
+        <button class="btn btn--outline" data-open="login-modal">Iniciar sesión</button>
+        {% endif %}
+      </div>
+      <p class="hero__feature">✓ Gratis y sin comisiones</p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="features__container">
+      <h2 class="section__title">¿Por qué elegirnos?</h2>
+      <div class="features__grid">
+        <div class="feature__card">
+          <div class="feature__icon icon-box"></div>
+          <h3>Gestión Completa</h3>
+          <p>Crea, edita, elimina y cambia el estado de tus productos en segundos.</p>
+        </div>
+        <div class="feature__card">
+          <div class="feature__icon icon-palette"></div>
+          <h3>Diseño Moderno</h3>
+          <p>Interfaz limpia y responsiva que funciona en todos los dispositivos.</p>
+        </div>
+        <div class="feature__card">
+          <div class="feature__icon icon-lightning"></div>
+          <h3>Súper Rápido</h3>
+          <p>Carga instantánea y actualizaciones en tiempo real sin esperas.</p>
+        </div>
+        <div class="feature__card">
+          <div class="feature__icon icon-shield"></div>
+          <h3>Seguro</h3>
+          <p>Tus datos protegidos con autenticación moderna y encriptación.</p>
+        </div>
+        <div class="feature__card">
+          <div class="feature__icon icon-phone"></div>
+          <h3>Mobile First</h3>
+          <p>Acceso total desde tu teléfono, tablet o computadora.</p>
+        </div>
+        <div class="feature__card">
+          <div class="feature__icon icon-rocket"></div>
+          <h3>Listo para Crecer</h3>
+          <p>Escala tu negocio sin preocuparte por la tecnología.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="how-it-works__container">
+      <h2 class="section__title">Así de fácil es vender</h2>
+      <div class="steps__grid">
+        <div class="step">
+          <div class="step__number">1</div>
+          <h3>Crea tu cuenta</h3>
+          <p>Regístrate en 30 segundos con tu correo</p>
+        </div>
+        <div class="step">
+          <div class="step__number">2</div>
+          <h3>Publica productos</h3>
+          <p>Agrega fotos, precios y descripción</p>
+        </div>
+        <div class="step">
+          <div class="step__number">3</div>
+          <h3>Gestiona estado</h3>
+          <p>Control total: borrador, publicado, vendido</p>
+        </div>
+        <div class="step">
+          <div class="step__number">4</div>
+          <h3>Empieza a vender</h3>
+          <p>Recibe visitas y cierra tus ventas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta__container">
+      <div class="cta__content">
+        <h2>Comienza tu tienda hoy mismo</h2>
+        <p>Únete a cientos de vendedores que ya usan nuestra plataforma</p>
+        <div class="cta__actions">
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'my_products' %}" class="btn btn--primary-light">Crear producto</a>
+          {% else %}
+          <button class="btn btn--primary-light" data-open="register-modal">Crear cuenta gratis</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 {% endblock %}
