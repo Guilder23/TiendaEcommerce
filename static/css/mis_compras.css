@@ -1,0 +1,90 @@
+/* ====== ESTILOS GENERALES ====== */
+section {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* ====== TABLA ====== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table thead {
+  background: #f4f6f9;
+}
+
+.table thead th {
+  text-align: left;
+  padding: 12px;
+  font-weight: 600;
+  color: #444;
+  border-bottom: 2px solid #e3e3e3;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #eaeaea;
+  transition: background 0.2s;
+}
+
+.table tbody tr:hover {
+  background: #f9fafc;
+}
+
+.table td {
+  padding: 12px;
+  color: #555;
+}
+
+/* Enlaces de comprobantes */
+.table a {
+  color: #0066ff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
+
+/* ====== ESTADOS (sin modificar HTML) ====== */
+/* Pendiente */
+.table td:nth-child(3):contains("Pendiente"),
+.table td:nth-child(3):contains("pendiente") {
+  color: #e8a000;
+  font-weight: bold;
+}
+
+/* Confirmado */
+.table td:nth-child(3):contains("Confirmado"),
+.table td:nth-child(3):contains("confirmado") {
+  color: #2cb67d;
+  font-weight: bold;
+}
+
+/* Rechazado */
+.table td:nth-child(3):contains("Rechazado"),
+.table td:nth-child(3):contains("rechazado") {
+  color: #e54848;
+  font-weight: bold;
+}
+
+/* ====== MENSAJE SIN COMPRAS ====== */
+section p {
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1rem;
+}

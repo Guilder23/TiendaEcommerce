@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Event listeners
   searchInput.addEventListener('input', filterProducts);
   priceRange.addEventListener('input', function() {
-    priceValue.textContent = '$' + parseInt(this.value).toLocaleString();
+    priceValue.textContent = 'Bs' + parseInt(this.value).toLocaleString();
     filterProducts();
   });
 
   // Inicializar valor de precio
-  priceValue.textContent = '$' + parseInt(priceRange.value).toLocaleString();
+  priceValue.textContent = 'Bs' + parseInt(priceRange.value).toLocaleString();
 });

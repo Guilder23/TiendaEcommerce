@@ -1,51 +1,112 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_styles %}
-<link rel="stylesheet" href="{% static 'css/productos/listar_productos.css' %}">
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
 {% endblock %}
 {% block content %}
-<section>
-  <h2>Checkout</h2>
-  <div>
-    <h3>Productos</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for it in items %}
-        <tr>
-          <td>{{ it.product.name }}</td>
-          <td>{{ it.quantity }}</td>
-          <td>${{ it.product.price }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div><strong>Total:</strong> ${{ total }}</div>
+<div class="checkout-container">
+  <!-- Header -->
+  <div class="checkout-header">
+    <h2>Finalizar Compra</h2>
+    <p>Completa tu compra de forma segura</p>
   </div>
-  <div>
-    <h3>Vendedor</h3>
-    <div><strong>Usuario:</strong> {{ seller.username }}</div>
-    <div><strong>QR de pago:</strong></div>
-    <div>
-      <img src="{{ seller_profile.qr.url }}" alt="QR de pago" style="width:200px;height:200px;object-fit:contain;border:1px solid #e5e7eb;border-radius:10px">
-    </div>
-  </div>
-  <div>
-    <h3>Comprobante</h3>
-    <form action="{% url 'checkout_submit' %}" method="post" enctype="multipart/form-data" class="form">
-      {% csrf_token %}
-      <label>Subir comprobante</label>
-      <input type="file" name="receipt" accept="image/*" required>
-      <div class="modal__actions" style="margin-top:10px">
-        <button type="submit" class="btn">Finalizar compra</button>
+
+  <!-- Main Grid -->
+  <div class="checkout-grid">
+    <!-- Products Section -->
+    <section class="checkout-section checkout-products">
+      <h3>Productos</h3>
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for it in items %}
+          <tr>
+            <td>{{ it.product.name }}</td>
+            <td><span class="product-qty">{{ it.quantity }}</span></td>
+            <td class="product-price">Bs{{ it.product.price }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Seller Section -->
+    <section class="checkout-section checkout-seller">
+      <h3>Información del Vendedor</h3>
+      <div class="seller-info">
+        <div class="seller-avatar">{{ seller.username|upper|slice:":1" }}</div>
+        <div class="seller-details">
+          <h4>{{ seller.username }}</h4>
+          <p>Vendedor verificado</p>
+        </div>
       </div>
-    </form>
+
+      <div class="seller-qr">
+        <label class="seller-qr-label">Código QR para Pago</label>
+        {% if seller_profile.qr %}
+        <img src="{{ seller_profile.qr.url }}" alt="QR de pago">
+        {% else %}
+        <span class="no-qr">Vendedor sin QR cargado</span>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- Payment Form -->
+    <section class="checkout-section checkout-payment">
+      <h3>Comprobante de Pago</h3>
+      <form action="{% url 'checkout_submit' %}" method="post" enctype="multipart/form-data" class="payment-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="receipt">Subir comprobante de pago</label>
+          <input type="file" id="receipt" name="receipt" accept="image/*" required>
+        </div>
+        <button type="submit" class="btn-submit">Finalizar compra</button>
+      </form>
+    </section>
+
+    <!-- Summary Sidebar -->
+    <aside class="checkout-summary">
+      <div class="summary-box">
+        <h4 class="summary-title">Resumen</h4>
+
+        <div class="summary-info">
+          <strong>Total de Artículos:</strong>
+          {{ widtotal|default:1 }} artículos
+        </div>
+
+        <div class="summary-items">
+          {% for it in items %}
+          <div class="summary-item">
+            <span class="summary-item__name">{{ it.product.name|truncatewords:3 }}</span>
+            <span class="summary-item__qty">x{{ it.quantity }}</span>
+            <span class="summary-item__price">Bs{{ it.product.price }}</span>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="summary-total">
+          <span class="summary-total__label">Total a Pagar:</span>
+          <span class="summary-total__amount">Bs{{ total }}</span>
+        </div>
+
+        <div class="summary-info">
+          <strong>Instrucciones:</strong>
+          1. Realiza el pago<br>
+          2. Sube el comprobante<br>
+          3. ¡Listo!
+        </div>
+
+        <div class="summary-actions">
+          <a href="{% url 'home' %}" class="btn-back">Volver a la tienda</a>
+        </div>
+      </div>
+    </aside>
   </div>
-</section>
+</div>
 {% endblock %}

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{% static 'css/login_modal.css' %}">
   <link rel="stylesheet" href="{% static 'css/register_modal.css' %}">
   <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/navbar-dropdowns.css' %}">
   <link rel="stylesheet" href="{% static 'css/productos/crear.css' %}">
   {% block page_styles %}{% endblock %}
 </head>
@@ -19,26 +20,54 @@
     <nav class="navbar">
       {% if request.user.is_authenticated %}
         <span class="navbar__user">{{ request.user.username }}</span>
+        
         {% if request.user.profile.role == 'buyer' %}
-        <button id="navbar-cart" class="navbar__icon" title="Carrito" aria-label="Carrito">
-          <svg viewBox="0 0 24 24" width="20" height="20" style="margin-right:6px"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-0.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l0.02-.12 0.9-1.63h7.45c0.75 0 1.41-.41 1.75-1.03l3.58-6.49c0.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-0.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s0.89 2 1.99 2 2-0.9 2-2-0.9-2-2-2z"></path></svg>
-          <span id="cart-count" class="navbar__badge">0</span>
-        </button>
-        <div id="cart-dropdown" class="cart-dropdown" style="position:absolute; right:12px; top:56px; background:#fff; border:1px solid #e5e7eb; box-shadow:0 12px 24px rgba(17,24,39,.08); border-radius:10px; width:320px; padding:12px; display:none; z-index:1000;">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
-            <strong>Tu carrito</strong>
-            <button type="button" id="cart-close" class="btn btn--secondary" style="padding:4px 8px;">Cerrar</button>
-          </div>
-          <div id="cart-items"></div>
-          <div id="cart-total" style="margin-top:8px; font-weight:600;"></div>
-          <div style="margin-top:10px; display:flex; justify-content:flex-end;">
-            <a href="{% url 'checkout' %}" class="btn">Comprar</a>
+        <!-- Botón Carrito -->
+        <div class="navbar__icon-wrapper">
+          <button id="navbar-cart" class="navbar__icon-btn" title="Carrito de compras">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-0.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l0.02-.12 0.9-1.63h7.45c0.75 0 1.41-.41 1.75-1.03l3.58-6.49c0.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-0.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s0.89 2 1.99 2 2-0.9 2-2-0.9-2-2-2z"/>
+            </svg>
+            <span id="cart-count" class="navbar__badge">0</span>
+          </button>
+          
+          <!-- Dropdown Carrito -->
+          <div id="cart-dropdown" class="navbar__dropdown cart-dropdown">
+            <div class="dropdown__header">
+              <h4 class="dropdown__title">Tu carrito</h4>
+              <button type="button" id="cart-close" class="dropdown__close">&times;</button>
+            </div>
+            <div id="cart-items" class="dropdown__content"></div>
+            <div id="cart-total" class="dropdown__footer"></div>
+            <div class="dropdown__actions">
+              <a href="{% url 'checkout' %}" class="btn btn-primary" style="width:100%">Ir al carrito</a>
+            </div>
           </div>
         </div>
         {% endif %}
-        <button id="navbar-bell" class="navbar__icon" title="Notificaciones">
-          <span id="notif-count" class="navbar__badge">0</span>
-        </button>
+        
+        <!-- Botón Notificaciones -->
+        <div class="navbar__icon-wrapper">
+          <button id="navbar-bell" class="navbar__icon-btn" title="Notificaciones">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.93 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+            <span id="notif-count" class="navbar__badge">0</span>
+          </button>
+          
+          <!-- Dropdown Notificaciones -->
+          <div id="notif-dropdown" class="navbar__dropdown notif-dropdown">
+            <div class="dropdown__header">
+              <h4 class="dropdown__title">Notificaciones</h4>
+              <button type="button" id="notif-close" class="dropdown__close">&times;</button>
+            </div>
+            <div id="notif-items" class="dropdown__content dropdown__content--scrollable"></div>
+            <div class="dropdown__actions">
+              <button type="button" class="btn btn-secondary" style="width:100%">Ver todas</button>
+            </div>
+          </div>
+        </div>
+        
         <a href="{% url 'logout' %}" class="btn btn--secondary">Cerrar sesión</a>
       {% else %}
         <a href="{% url 'home' %}" class="navbar__link">inicio</a>
@@ -104,8 +133,6 @@
   {% block page_scripts %}{% endblock %}
   
   <script src="{% static 'js/notifications.js' %}"></script>
-  {% if request.user.is_authenticated %}
-  <script src="{% static 'js/cart.js' %}"></script>
-  {% endif %}
+  <script src="{% static 'js/navbar-dropdowns.js' %}"></script>
 </body>
 <html>

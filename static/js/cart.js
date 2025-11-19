@@ -29,14 +29,14 @@ document.addEventListener('DOMContentLoaded', function(){
           return '<div style="display:flex;align-items:center;justify-content:space-between;margin:6px 0">'
             + '<span>' + i.product + ' × ' + i.quantity + '</span>'
             + '<div style="display:flex;align-items:center;gap:8px">'
-            +   '<span>$' + i.price + '</span>'
+            +   '<span>Bs' + i.price + '</span>'
             +   '<button class="cart-remove" data-id="' + i.id + '" title="Eliminar" style="border:1px solid #e5e7eb;background:#fff;border-radius:6px;width:28px;height:28px;display:grid;place-items:center;cursor:pointer">'
             +     '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>'
             +   '</button>'
             + '</div>'
           + '</div>';
         }).join('');
-        total.textContent = 'Total: $' + (d.total || '0');
+        total.textContent = 'Total: Bs' + (d.total || '0');
         // Wire remove
         var buttons = box.querySelectorAll('.cart-remove');
         for(var k=0;k<buttons.length;k++){

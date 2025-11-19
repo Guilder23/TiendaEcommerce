@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var url = b.getAttribute('data-photo-url') || '';
       if (url) { img.src = url; img.style.display = 'block' } else { img.style.display = 'none' }
       document.getElementById('product-view-desc').textContent = b.getAttribute('data-description') || '';
-      document.getElementById('product-view-price').textContent = 'Precio: $' + (b.getAttribute('data-price') || '');
+      document.getElementById('product-view-price').textContent = 'Precio: Bs' + (b.getAttribute('data-price') || '');
       document.getElementById('product-view-status').textContent = 'Estado: ' + (b.getAttribute('data-status') || '');
       open();
     })

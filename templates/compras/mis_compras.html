@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_styles %}
-<link rel="stylesheet" href="{% static 'css/productos/listar_productos.css' %}">
+<link rel="stylesheet" href="{% static 'css/mis_compras.css' %}">
 {% endblock %}
 {% block content %}
 <section>
@@ -21,7 +21,7 @@
       {% for o in orders %}
       <tr>
         <td>{{ o.seller.username }}</td>
-        <td>${{ o.total }}</td>
+        <td>Bs{{ o.total }}</td>
         <td>{{ o.get_status_display }}</td>
         <td>{% if o.status == 'rejected' %}{{ o.rejection_reason }}{% else %}—{% endif %}</td>
         <td>{% if o.receipt %}<a href="{{ o.receipt.url }}" target="_blank">Ver</a>{% else %}N/A{% endif %}</td>

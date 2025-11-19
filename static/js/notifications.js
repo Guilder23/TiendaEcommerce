@@ -1,22 +1,16 @@
 document.addEventListener('DOMContentLoaded', function(){
-  // Cargar notificaciones
-  fetch('/notifications/count.json')
-    .then(r => r.json())
-    .then(d => {
-      var el = document.getElementById('notif-count');
-      if(el){ el.textContent = d.count || 0; }
-    })
-    .catch(() => {});
-  
-  var bell = document.getElementById('navbar-bell');
-  if(bell){
-    bell.addEventListener('click', function(){
-      fetch('/notifications/list.json')
-        .then(r => r.json())
-        .then(d => {
-          alert((d.items || []).map(function(i){ return i.message; }).join('\n') || 'Sin notificaciones');
-        })
-        .catch(function(){});
-    });
+  var notifCountEl = document.getElementById('notif-count');
+  var cartCountEl = document.getElementById('cart-count');
+  if(notifCountEl){
+    fetch('/notifications/count.json')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ notifCountEl.textContent = d.count || 0; })
+      .catch(function(){});
+  }
+  if(cartCountEl){
+    fetch('/cart/count.json')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ cartCountEl.textContent = d.count || 0; })
+      .catch(function(){});
   }
 });

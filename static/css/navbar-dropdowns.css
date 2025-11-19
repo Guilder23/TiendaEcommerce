@@ -1,0 +1,15 @@
+.navbar__icon-wrapper{position:relative;display:inline-block;margin-left:8px}
+.navbar__icon-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:6px 8px;cursor:pointer}
+.navbar__badge{display:inline-block;min-width:18px;height:18px;line-height:18px;text-align:center;background:#ef4444;color:#fff;border-radius:9px;font-size:12px;padding:0 4px}
+.navbar__dropdown{position:absolute;right:0;top:42px;width:320px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 12px 24px rgba(17,24,39,.08);padding:12px;display:none;z-index:1000}
+.dropdown__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.dropdown__title{margin:0;font-size:16px}
+.dropdown__close{border:1px solid #e5e7eb;background:#fff;border-radius:6px;width:28px;height:28px;cursor:pointer}
+.dropdown__content{display:block}
+.dropdown__content--scrollable{max-height:220px;overflow:auto}
+.dropdown__row{display:flex;align-items:center;justify-content:space-between;margin:6px 0}
+.dropdown__row_actions{display:flex;align-items:center;gap:8px}
+.dropdown__footer{margin-top:8px;font-weight:600}
+.dropdown__actions{margin-top:10px;display:flex;justify-content:flex-end}
+.cart-dropdown{right:0}
+.notif-dropdown{right:0}

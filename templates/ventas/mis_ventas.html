@@ -21,7 +21,7 @@
       {% for o in orders %}
       <tr>
         <td>{{ o.buyer.username }}</td>
-        <td>${{ o.total }}</td>
+        <td>Bs{{ o.total }}</td>
         <td>{{ o.get_status_display }}</td>
         <td>{% if o.receipt %}<a href="{{ o.receipt.url }}" target="_blank">Ver</a>{% else %}N/A{% endif %}</td>
         <td class="actions">

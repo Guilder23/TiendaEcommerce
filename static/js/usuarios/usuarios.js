@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const username = this.getAttribute('data-username');
       
       form.action = this.getAttribute('data-delete-url');
-      document.getElementById('user-delete-name').textContent = `¿Eliminar "${username}"?`;
+      document.getElementById('user-delete-name').textContent = `¿Eliminar "Bs{username}"?`;
       
       openModal(deleteModal);
     });
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Cerrar modales
   closeBtns.forEach(btn => {
     btn.addEventListener('click', function() {
-      closeModal(this.closest('[id$="-modal"]'));
+      closeModal(this.closest('[idBs="-modal"]'));
     });
   });
 
@@ -103,23 +103,23 @@ function populateViewModal(userData) {
     viewBody.innerHTML = `
       <div class="user-info-item">
         <div class="user-info-label">Nombre</div>
-        <div class="user-info-value">${userData.name || 'N/A'}</div>
+        <div class="user-info-value">Bs{userData.name || 'N/A'}</div>
       </div>
       <div class="user-info-item">
         <div class="user-info-label">Email</div>
-        <div class="user-info-value">${userData.email || 'N/A'}</div>
+        <div class="user-info-value">Bs{userData.email || 'N/A'}</div>
       </div>
       <div class="user-info-item">
         <div class="user-info-label">Teléfono</div>
-        <div class="user-info-value">${userData.phone || 'N/A'}</div>
+        <div class="user-info-value">Bs{userData.phone || 'N/A'}</div>
       </div>
       <div class="user-info-item">
         <div class="user-info-label">Dirección</div>
-        <div class="user-info-value">${userData.address || 'N/A'}</div>
+        <div class="user-info-value">Bs{userData.address || 'N/A'}</div>
       </div>
       <div class="user-info-item">
         <div class="user-info-label">Rol</div>
-        <div class="user-info-value">${userData.role || 'N/A'}</div>
+        <div class="user-info-value">Bs{userData.role || 'N/A'}</div>
       </div>
     `;
   }

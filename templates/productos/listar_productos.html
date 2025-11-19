@@ -33,7 +33,7 @@
         value="10000" 
         class="price-slider"
       >
-      <span id="price-value">$10000</span>
+      <span id="price-value">Bs10000</span>
     </div>
   </div>
 
@@ -54,7 +54,7 @@
       <h3>{{ p.name }}</h3>
       <p class="product-description">{{ p.description|truncatewords:20 }}</p>
       <div class="product-info">
-        <div class="product-price">${{ p.price }}</div>
+        <div class="product-price">Bs{{ p.price }}</div>
         <div class="product-status">{{ p.get_status_display }}</div>
       </div>
       <div class="product-actions">

@@ -332,12 +332,14 @@ def cart_list_json(request):
     total = Decimal('0')
     for it in items:
         total += Decimal(str(it.product.price)) * it.quantity
-        data.append({'id': it.id, 'product': it.product.name, 'price': str(it.product.price), 'quantity': it.quantity})
+        data.append({'id': it.id, 'product': it.product.name, 'price': str(it.product.price), 'quantity': it.quantity, 'line_total': str(Decimal(str(it.product.price)) * it.quantity)})
     return JsonResponse({'items': data, 'total': str(total)})
 
 @login_required
 def cart_count_json(request):
-    count = CartItem.objects.filter(user=request.user).count()
+    count = 0
+    for q in CartItem.objects.filter(user=request.user).values_list('quantity', flat=True):
+        count += int(q)
     return JsonResponse({'count': count})
 
 @login_required
