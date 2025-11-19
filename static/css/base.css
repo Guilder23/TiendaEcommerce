@@ -64,6 +64,15 @@ header h1 {
   border: 1px solid transparent;
 }
 
+/* Sidebar */
+.sidebar__item {
+  text-decoration: none;
+}
+
+.sidebar__item:hover {
+  text-decoration: none;
+}
+
 .navbar__link:hover {
   background: #f3f4f6;
   border-color: #e5e7eb;
