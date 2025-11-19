@@ -12,3 +12,5 @@
 .perfil .form input:focus,.perfil .form textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.15)}
 @media (max-width:920px){.perfil__grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.perfil__grid{grid-template-columns:1fr}}
+ .perfil__qr{margin-top:10px}
+ .perfil__qr-img{width:160px;height:160px;object-fit:contain;border:1px solid #e5e7eb;border-radius:10px;margin:8px 0}

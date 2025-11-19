@@ -37,6 +37,15 @@
         <textarea name="address">{{ profile.address }}</textarea>
         <label>Foto de perfil</label>
         <input type="file" name="photo" accept="image/*">
+        {% if profile.role == 'admin' %}
+        <div class="perfil__qr">
+          <label>QR para depósitos (solo administradores)</label>
+          {% if profile.qr %}
+          <img src="{{ profile.qr.url }}" alt="QR de depósitos" class="perfil__qr-img">
+          {% endif %}
+          <input type="file" name="qr" accept="image/*">
+        </div>
+        {% endif %}
         <div class="perfil__actions">
           <button type="submit" class="btn">Guardar cambios</button>
         </div>

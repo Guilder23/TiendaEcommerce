@@ -25,6 +25,7 @@ class Profile(models.Model):
     address = models.TextField(blank=True)
     phone = models.CharField(max_length=30, blank=True)
     photo = models.ImageField(upload_to='profiles/', null=True, blank=True)
+    qr = models.ImageField(upload_to='profiles/qr/', null=True, blank=True)
     role = models.CharField(max_length=10, choices=[('admin','Admin'),('buyer','Comprador')], default='buyer')
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -77,6 +77,9 @@ def product_create(request):
         if not name or not price:
             messages.error(request, 'Nombre y precio son obligatorios')
             return redirect('my_products')
+        if status == 'published' and not prof.qr:
+            messages.error(request, 'Debes subir tu QR en el perfil para publicar productos')
+            return redirect('profile')
         try:
             p = Product(owner=request.user, name=name, description=description, price=price, status=status)
             if photo:
@@ -106,6 +109,9 @@ def product_edit(request, pk):
         p.description = request.POST.get('description', '').strip()
         p.price = request.POST.get('price', '').strip()
         p.status = request.POST.get('status', p.status)
+        if p.status == 'published' and not prof.qr:
+            messages.error(request, 'Debes subir tu QR en el perfil para publicar productos')
+            return redirect('profile')
         photo = request.FILES.get('photo')
         if photo:
             p.photo = photo
@@ -130,6 +136,9 @@ def product_set_status(request, pk):
     if s not in ['draft', 'published', 'sold']:
         messages.error(request, 'Estado inválido')
         return redirect('my_products')
+    if s == 'published' and not prof.qr:
+        messages.error(request, 'Debes subir tu QR en el perfil para publicar productos')
+        return redirect('profile')
     p.status = s
     p.save()
     if s == 'published':
@@ -170,6 +179,9 @@ def profile(request):
         photo = request.FILES.get('photo')
         if photo:
             profile.photo = photo
+        qr = request.FILES.get('qr')
+        if qr:
+            profile.qr = qr
         email = request.POST.get('email', '').strip()
         request.user.email = email
         request.user.save()
