@@ -13,4 +13,20 @@ document.addEventListener('DOMContentLoaded', function(){
       .then(function(d){ cartCountEl.textContent = d.count || 0; })
       .catch(function(){});
   }
+
+  var msgs = document.querySelectorAll('ul.messages .message');
+  for(var i=0;i<msgs.length;i++){
+    (function(m){
+      setTimeout(function(){
+        m.classList.add('message--hide');
+        setTimeout(function(){
+          if(m && m.parentNode){
+            m.parentNode.removeChild(m);
+            var list = document.querySelector('ul.messages');
+            if(list && list.children.length === 0){ list.style.display = 'none'; }
+          }
+        }, 350);
+      }, 3000);
+    })(msgs[i]);
+  }
 });

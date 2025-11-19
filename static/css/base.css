@@ -115,10 +115,15 @@ main {
 ul.messages {
   list-style: none;
   padding: 0;
-  margin: 0 0 20px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2000;
+  width: 320px;
 }
 
 .message {
@@ -129,6 +134,7 @@ ul.messages {
   border-left: 4px solid #d1d5db;
   background: #f9fafb;
   color: #374151;
+  transition: opacity .3s ease, transform .3s ease;
 }
 
 .message.success {
@@ -147,6 +153,11 @@ ul.messages {
   background: #f0f9ff;
   border-left-color: #3b82f6;
   color: #0c2340;
+}
+
+.message--hide {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
 /* Página con sidebar */
