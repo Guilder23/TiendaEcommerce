@@ -62,6 +62,10 @@ def my_products(request):
 
 @login_required
 def product_create(request):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        messages.error(request, 'Solo administradores pueden crear productos')
+        return redirect('my_products')
     if request.method == 'GET':
         return redirect('my_products')
     with transaction.atomic():
@@ -86,6 +90,10 @@ def product_create(request):
 
 @login_required
 def product_edit(request, pk):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        messages.error(request, 'Solo administradores pueden editar productos')
+        return redirect('my_products')
     try:
         p = Product.objects.get(pk=pk, owner=request.user)
     except Product.DoesNotExist:
@@ -109,6 +117,10 @@ def product_edit(request, pk):
 def product_set_status(request, pk):
     if request.method != 'POST':
         return redirect('my_products')
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        messages.error(request, 'Solo administradores pueden cambiar estado')
+        return redirect('my_products')
     try:
         p = Product.objects.get(pk=pk, owner=request.user)
     except Product.DoesNotExist:
@@ -130,6 +142,10 @@ def product_set_status(request, pk):
 
 @login_required
 def product_delete(request, pk):
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        messages.error(request, 'Solo administradores pueden eliminar productos')
+        return redirect('my_products')
     try:
         p = Product.objects.get(pk=pk, owner=request.user)
     except Product.DoesNotExist:
@@ -179,3 +195,95 @@ def profile_password(request):
     update_session_auth_hash(request, request.user)
     messages.success(request, 'Contraseña actualizada')
     return redirect('profile')
+
+#--------------------------------------------------------------------------
+# USUARIOS (ADMIN)
+def _ensure_admin(request):
+    if not request.user.is_authenticated:
+        messages.error(request, 'Acceso restringido')
+        return False
+    prof, _ = Profile.objects.get_or_create(user=request.user)
+    if prof.role != 'admin':
+        messages.error(request, 'Solo administradores pueden gestionar usuarios')
+        return False
+    return True
+
+@login_required
+def users_list(request):
+    if not _ensure_admin(request):
+        return redirect('home')
+    users = list(User.objects.all().order_by('username'))
+    for u in users:
+        Profile.objects.get_or_create(user=u)
+    return render(request, 'usuarios/lista.html', {'users': users})
+
+@login_required
+def user_create(request):
+    if not _ensure_admin(request):
+        return redirect('home')
+    if request.method != 'POST':
+        return redirect('users_list')
+    username = request.POST.get('username', '').strip()
+    email = request.POST.get('email', '').strip()
+    password = request.POST.get('password', '')
+    role = request.POST.get('role', 'buyer')
+    name = request.POST.get('name', '').strip()
+    phone = request.POST.get('phone', '').strip()
+    address = request.POST.get('address', '').strip()
+    photo = request.FILES.get('photo')
+    if not username or not password:
+        messages.error(request, 'Usuario y contraseña son obligatorios')
+        return redirect('users_list')
+    if User.objects.filter(username=username).exists():
+        messages.error(request, 'El usuario ya existe')
+        return redirect('users_list')
+    user = User.objects.create_user(username=username, email=email or None, password=password)
+    prof = Profile.objects.create(user=user, first_name=name, phone=phone, address=address, role=role)
+    if photo:
+        prof.photo = photo
+        prof.save()
+    messages.success(request, 'Usuario creado')
+    return redirect('users_list')
+
+@login_required
+def user_edit(request, pk):
+    if not _ensure_admin(request):
+        return redirect('home')
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        messages.error(request, 'Usuario no encontrado')
+        return redirect('users_list')
+    prof, _ = Profile.objects.get_or_create(user=user)
+    if request.method != 'POST':
+        return redirect('users_list')
+    user.email = request.POST.get('email', '').strip()
+    prof.first_name = request.POST.get('name', '').strip()
+    prof.phone = request.POST.get('phone', '').strip()
+    prof.address = request.POST.get('address', '').strip()
+    prof.role = request.POST.get('role', prof.role)
+    photo = request.FILES.get('photo')
+    if photo:
+        prof.photo = photo
+    new_password = request.POST.get('password', '').strip()
+    if new_password:
+        user.set_password(new_password)
+    user.save(); prof.save()
+    messages.success(request, 'Usuario actualizado')
+    return redirect('users_list')
+
+@login_required
+def user_delete(request, pk):
+    if not _ensure_admin(request):
+        return redirect('home')
+    if request.user.pk == pk:
+        messages.error(request, 'No puedes eliminar tu propio usuario')
+        return redirect('users_list')
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        messages.error(request, 'Usuario no encontrado')
+        return redirect('users_list')
+    user.delete()
+    messages.info(request, 'Usuario eliminado')
+    return redirect('users_list')

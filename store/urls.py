@@ -18,4 +18,10 @@ urlpatterns = [
     # PERFIL
     path('perfil/', views.profile, name='profile'),
     path('perfil/password/', views.profile_password, name='profile_password'),
+    #--------------------------------------------------------------------------
+    # USUARIOS (ADMIN)
+    path('usuarios/', views.users_list, name='users_list'),
+    path('usuarios/nuevo/', views.user_create, name='user_create'),
+    path('usuarios/<int:pk>/editar/', views.user_edit, name='user_edit'),
+    path('usuarios/<int:pk>/eliminar/', views.user_delete, name='user_delete'),
 ]

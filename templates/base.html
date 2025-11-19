@@ -52,6 +52,12 @@
           <a href="{% url 'profile' %}" class="sidebar__item" title="Mi perfil">
             <span class="sidebar__text">Mi perfil</span>
           </a>
+          
+          <a href="{% url 'users_list' %}" class="sidebar__item" title="Usuarios">
+            <span class="sidebar__text">Usuarios</span>
+          </a>
+          {% if request.user.profile.role == 'admin' %}
+          {% endif %}
         </div>
       </aside>
       {% endif %}

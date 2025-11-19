@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/usuarios/usuarios.css' %}">
+<link rel="stylesheet" href="{% static 'css/usuarios/crear.css' %}">
+<link rel="stylesheet" href="{% static 'css/usuarios/ver.css' %}">
+<link rel="stylesheet" href="{% static 'css/usuarios/editar.css' %}">
+<link rel="stylesheet" href="{% static 'css/usuarios/eliminar.css' %}">
+{% endblock %}
+{% block content %}
+<!-- ===== SECCIÓN TABLA DE USUARIOS ===== -->
+<section class="users-section">
+  <h2>Gestión de Usuarios</h2>
+  
+  <div class="users-actions">
+    <button class="btn-create-user" title="Crear nuevo usuario">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      Nuevo usuario
+    </button>
+  </div>
+
+  {% if users %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.get_full_name|default:user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.profile.phone|default:"N/A" }}</td>
+        <td>
+          {% if user.profile.role == 'admin' %}
+            <span class="badge">Admin</span>
+          {% else %}
+            <span class="badge">Comprador</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if user.is_active %}
+            <span class="user-status active">
+              <span class="status-dot active"></span>
+              Activo
+            </span>
+          {% else %}
+            <span class="user-status inactive">
+              <span class="status-dot inactive"></span>
+              Inactivo
+            </span>
+          {% endif %}
+        </td>
+        <td class="actions">
+          <button class="icon-btn" title="Ver" data-action="view"
+                  data-username="{{ user.get_full_name|default:user.username }}"
+                  data-name="{{ user.get_full_name|default:user.username }}" data-email="{{ user.email }}"
+                  data-phone="{{ user.profile.phone|default:'' }}" data-address="{{ user.profile.address|default:'' }}"
+                  data-role="{% if user.profile.role == 'admin' %}Admin{% else %}Comprador{% endif %}">
+            <svg viewBox="0 0 24 24"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/></svg>
+          </button>
+          <button class="icon-btn" title="Editar" data-action="edit"
+                  data-edit-url="{% url 'user_edit' user.id %}"
+                  data-name="{{ user.get_full_name|default:user.username }}" data-email="{{ user.email }}"
+                  data-phone="{{ user.profile.phone|default:'' }}" data-address="{{ user.profile.address|default:'' }}"
+                  data-role="{{ user.profile.role|default:'buyer' }}">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm19.71-11.04a1 1 0 000-1.41l-2.5-2.5a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.99-1.67z"/></svg>
+          </button>
+          <button class="icon-btn" title="Eliminar" data-action="delete"
+                  data-delete-url="{% url 'user_delete' user.id %}"
+                  data-username="{{ user.get_full_name|default:user.username }}">
+            <svg viewBox="0 0 24 24"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="no-users">
+    <p>No hay usuarios en el sistema.</p>
+  </div>
+  {% endif %}
+</section>
+
+<!-- ===== SECCIÓN MODALES ===== -->
+<div class="modals-container">
+  {% include 'usuarios/crear.html' %}
+  {% include 'usuarios/ver.html' %}
+  {% include 'usuarios/editar.html' %}
+  {% include 'usuarios/eliminar.html' %}
+</div>
+<!-- ===== FIN SECCIÓN MODALES ===== -->
+
+{% endblock %}
+{% block page_scripts %}
+<script src="{% static 'js/usuarios/usuarios.js' %}"></script>
+<script src="{% static 'js/usuarios/crear.js' %}"></script>
+<script src="{% static 'js/usuarios/ver.js' %}"></script>
+<script src="{% static 'js/usuarios/editar.js' %}"></script>
+<script src="{% static 'js/usuarios/eliminar.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,108 @@
+/* ===== Modal Eliminar Usuario ===== */
+.user-delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+}
+
+.user-delete-modal[data-open] {
+  display: flex;
+}
+
+.user-delete-modal__content {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  text-align: center;
+}
+
+.user-delete-modal__icon {
+  width: 60px;
+  height: 60px;
+  background: #fee2e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 32px;
+}
+
+.user-delete-modal__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 12px;
+}
+
+.user-delete-modal__description {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+.user-delete-modal__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 10px 16px;
+  background: #f3f4f6;
+  color: #111;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #e5e7eb;
+}
+
+.btn-delete {
+  flex: 1;
+  padding: 10px 16px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-delete:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .user-delete-modal__content {
+    padding: 24px;
+    margin: 16px;
+  }
+
+  .user-delete-modal__title {
+    font-size: 1.1rem;
+  }
+}

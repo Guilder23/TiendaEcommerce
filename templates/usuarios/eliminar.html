@@ -1,0 +1,16 @@
+<!-- Modal Eliminar Usuario -->
+<div id="user-delete-modal" class="user-delete-modal">
+  <div class="user-delete-modal__content">
+    <div class="user-delete-modal__icon">⚠️</div>
+    <h3 class="user-delete-modal__title">Confirmar eliminación</h3>
+    <p id="user-delete-name" class="user-delete-modal__description">¿Está seguro de que desea eliminar este usuario?</p>
+    <form id="user-delete-form" method="POST" action="#">
+      {% csrf_token %}
+      <input type="hidden" id="user-id-delete" name="user_id">
+      <div class="user-delete-modal__actions">
+        <button type="button" class="btn-cancel" data-close>Cancelar</button>
+        <button type="submit" class="btn-delete">Eliminar</button>
+      </div>
+    </form>
+  </div>
+</div>

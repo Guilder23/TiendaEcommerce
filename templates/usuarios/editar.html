@@ -1,0 +1,47 @@
+<!-- Modal Editar Usuario -->
+<div id="user-edit-modal" class="user-edit-modal">
+  <div class="user-edit-modal__content">
+    <div class="user-edit-modal__header">
+      <h3 class="user-edit-modal__title">Editar usuario</h3>
+      <p class="user-edit-modal__description">Actualiza los datos del usuario</p>
+    </div>
+    <form id="user-edit-form" class="user-edit-form" method="POST" action="#" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="edit-name">Nombre completo</label>
+        <input type="text" id="edit-name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="edit-email">Email</label>
+        <input type="email" id="edit-email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="edit-phone">Teléfono</label>
+        <input type="tel" id="edit-phone" name="phone">
+      </div>
+      <div class="form-group">
+        <label for="edit-address">Dirección</label>
+        <textarea id="edit-address" name="address" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="edit-photo">Foto</label>
+        <input type="file" id="edit-photo" name="photo" accept="image/*">
+      </div>
+      <div class="form-group">
+        <label for="edit-password">Nueva contraseña</label>
+        <input type="password" id="edit-password" name="password" placeholder="Opcional">
+      </div>
+      <div class="form-group">
+        <label for="edit-role">Rol</label>
+        <select id="edit-role" name="role">
+          <option value="buyer">Comprador</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="user-edit-modal__actions">
+        <button type="button" class="btn-cancel" data-close>Cancelar</button>
+        <button type="submit" class="btn-save">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
