@@ -7,9 +7,45 @@
 {% block content %}
 <section>
   <h2>Productos disponibles</h2>
-  <div class="products-grid">
+  
+  <!-- Filtros y búsqueda -->
+  <div class="filters-container">
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="search-input" 
+        placeholder="Buscar por nombre..." 
+        class="search-input"
+      >
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+    </div>
+    
+    <div class="price-filter">
+      <label for="price-range">Precio máximo:</label>
+      <input 
+        type="range" 
+        id="price-range" 
+        min="0" 
+        max="10000" 
+        value="10000" 
+        class="price-slider"
+      >
+      <span id="price-value">$10000</span>
+    </div>
+  </div>
+
+  <!-- Mensaje de sin resultados -->
+  <div id="no-results" class="no-results" style="display: none;">
+    <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+  </div>
+
+  <!-- Grid de productos -->
+  <div class="products-grid" id="products-grid">
     {% for p in products %}
-    <div class="product-card">
+    <div class="product-card" data-name="{{ p.name|lower }}" data-price="{{ p.price }}">
       {% if p.photo %}
         <img src="{{ p.photo.url }}" alt="{{ p.name }}" class="card__img">
       {% else %}
@@ -36,7 +72,7 @@
       </div>
     </div>
     {% empty %}
-    <p>No hay productos disponibles.</p>
+    <p class="empty-message">No hay productos disponibles.</p>
     {% endfor %}
   </div>
 </section>
@@ -44,4 +80,5 @@
 {% endblock %}
 {% block page_scripts %}
 <script src="{% static 'js/productos/ver.js' %}"></script>
+<script src="{% static 'js/productos/buscar.js' %}"></script>
 {% endblock %}
