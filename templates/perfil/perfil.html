@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/perfil/perfil.css' %}">
+{% endblock %}
+{% block content %}
+<section class="perfil">
+  <h2>Mi perfil</h2>
+  <div class="perfil__grid">
+    <div class="perfil__card">
+      <div class="perfil__avatar">
+        {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="Foto de perfil">
+        {% else %}
+        <div class="perfil__avatar--placeholder">{{ request.user.username|first|upper }}</div>
+        {% endif %}
+      </div>
+      <div class="perfil__info">
+        <div><strong>Usuario:</strong> {{ request.user.username }}</div>
+        <div><strong>Nombre:</strong> {{ profile.first_name }}</div>
+        <div><strong>Email:</strong> {{ request.user.email }}</div>
+        <div><strong>Teléfono:</strong> {{ profile.phone }}</div>
+        <div><strong>Dirección:</strong> {{ profile.address }}</div>
+      </div>
+    </div>
+    <div class="perfil__card">
+      <h3>Editar información</h3>
+      <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        <label>Nombre</label>
+        <input type="text" name="name" value="{{ profile.first_name }}">
+        <label>Email</label>
+        <input type="email" name="email" value="{{ request.user.email }}">
+        <label>Teléfono</label>
+        <input type="text" name="phone" value="{{ profile.phone }}">
+        <label>Dirección</label>
+        <textarea name="address">{{ profile.address }}</textarea>
+        <label>Foto de perfil</label>
+        <input type="file" name="photo" accept="image/*">
+        <div class="perfil__actions">
+          <button type="submit" class="btn">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+    <div class="perfil__card">
+      <h3>Seguridad</h3>
+      <p>Mantén tu cuenta protegida actualizando tu contraseña periódicamente.</p>
+      <div class="perfil__actions">
+        <a href="{% url 'profile_password' %}" class="btn">Cambiar contraseña</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

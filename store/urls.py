@@ -14,4 +14,8 @@ urlpatterns = [
     path('productos/<int:pk>/editar/', views.product_edit, name='product_edit'),
     path('productos/<int:pk>/estado/', views.product_set_status, name='product_set_status'),
     path('productos/<int:pk>/eliminar/', views.product_delete, name='product_delete'),
+    #--------------------------------------------------------------------------
+    # PERFIL
+    path('perfil/', views.profile, name='profile'),
+    path('perfil/password/', views.profile_password, name='profile_password'),
 ]

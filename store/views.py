@@ -3,8 +3,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 from django.db import transaction
-from .models import Product
+from .models import Product, Profile
 
 def home(request):
     return render(request, 'store/home.html')
@@ -138,3 +139,43 @@ def product_delete(request, pk):
     p.save()
     messages.info(request, 'Producto eliminado')
     return redirect('my_products')
+
+#--------------------------------------------------------------------------
+# PERFIL
+@login_required
+def profile(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    if request.method == 'GET':
+        return render(request, 'perfil/perfil.html', {'profile': profile})
+    with transaction.atomic():
+        profile.first_name = request.POST.get('name', '').strip()
+        profile.address = request.POST.get('address', '').strip()
+        profile.phone = request.POST.get('phone', '').strip()
+        photo = request.FILES.get('photo')
+        if photo:
+            profile.photo = photo
+        email = request.POST.get('email', '').strip()
+        request.user.email = email
+        request.user.save()
+        profile.save()
+        messages.success(request, 'Perfil actualizado')
+        return redirect('profile')
+
+@login_required
+def profile_password(request):
+    if request.method != 'POST':
+        return render(request, 'perfil/cambiar_password.html')
+    current = request.POST.get('current_password', '')
+    new = request.POST.get('new_password', '')
+    new2 = request.POST.get('new_password2', '')
+    if not request.user.check_password(current):
+        messages.error(request, 'Contraseña actual incorrecta')
+        return redirect('profile_password')
+    if not new or new != new2:
+        messages.error(request, 'Las contraseñas no coinciden')
+        return redirect('profile_password')
+    request.user.set_password(new)
+    request.user.save()
+    update_session_auth_hash(request, request.user)
+    messages.success(request, 'Contraseña actualizada')
+    return redirect('profile')
