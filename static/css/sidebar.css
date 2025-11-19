@@ -30,10 +30,12 @@
     padding: 8px 10px; /* Antes 10px 12px */
     border-radius: 6px; /* Antes 8px */
     cursor: pointer;
+    text-decoration: none;
 }
 
 .sidebar__item:hover {
     background: #202c33;
+    text-decoration: none;
 }
 
 .sidebar__item svg {

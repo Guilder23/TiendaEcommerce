@@ -25,6 +25,12 @@
   padding: 32px;
   max-height: 90vh;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.user-view-modal__content::-webkit-scrollbar {
+  display: none;
 }
 
 .user-view-modal__header {
